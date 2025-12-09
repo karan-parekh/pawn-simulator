@@ -1,10 +1,19 @@
 import { useState } from "react";
 
-interface InputBoxProps {
-    handleCommand: (command: string) => void;
+// All the string literals can be declared as constants/types for brevity, but they are used directly for now.
+export type commandType = {
+    keyword: 'PLACE' | 'MOVE' | 'LEFT' | 'RIGHT' | 'REPORT';
+    x?: number;
+    y?: number;
+    direction?: 'NORTH' | 'SOUTH' | 'EAST' | 'WEST';
+    color?: 'WHITE' | 'BLACK';
 }
 
-const InputBox: React.FC<InputBoxProps> = ({handleCommand}) => {
+interface InputBoxProps {
+    parseCommand: (command: commandType) => void;
+}
+
+const InputBox: React.FC<InputBoxProps> = ({parseCommand}) => {
     const [inputCmd, setInputCmd] = useState<string>("");
     const validKeywords = ['PLACE', 'MOVE', 'LEFT', 'RIGHT', 'REPORT'];
     const nonArgCommands = ['LEFT', 'RIGHT', 'REPORT'];
@@ -19,24 +28,26 @@ const InputBox: React.FC<InputBoxProps> = ({handleCommand}) => {
         }
 
         if (nonArgCommands.includes(keyword)) {
-            handleCommand(cmd);
+            parseCommand(
+                { keyword: keyword as 'LEFT' | 'RIGHT' | 'REPORT' }
+            );
             return;
         }
 
         // For MOVE command, validate X
-
         if (keyword === 'MOVE') {
             const args = cmd.split(' ').slice(1);
             if (args.length !== 1 || isNaN(Number(args[0]))) {
                 alert("Invalid MOVE command format. Use: MOVE <number_of_steps>. Try again.");
                 return;
             }
-            handleCommand(cmd);
+            parseCommand(
+                { keyword: 'MOVE', x: Number(args[0]) }
+            );
             return;
         }
         
-        // For PLACE command, validate arguments
-
+        // For PLACE command, validate X,Y,F,C
         const args = cmd.split(' ')[1] ?.split(',') || [];
         console.log('arg len:', args.length);
         if (args.length != 4) {
@@ -62,7 +73,15 @@ const InputBox: React.FC<InputBoxProps> = ({handleCommand}) => {
             return;
         }
 
-        handleCommand(cmd)
+        parseCommand(
+            { 
+                keyword: 'PLACE', 
+                x: position[0], 
+                y: position[1], 
+                direction: direction as 'NORTH' | 'SOUTH' | 'EAST' | 'WEST', 
+                color: color as 'WHITE' | 'BLACK'
+            }
+        )
     }
 
     return (

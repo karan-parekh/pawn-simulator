@@ -2,12 +2,12 @@ import pawnBlack from "../assets/pawn-b.svg"
 import pawnWhite from "../assets/pawn-w.svg"
 interface SquareProps {
     isDark: boolean;
-    pawn?: 'white' | 'black' | null;
+    pawnColor?: 'white' | 'black' | null;
     direction?: 'NORTH' | 'SOUTH' | 'EAST' | 'WEST';
     children?: React.ReactNode;
 }
 
-const Square: React.FC<SquareProps> = ({ isDark, pawn=null, direction='SOUTH' }) => {
+const Square: React.FC<SquareProps> = ({ isDark, pawnColor, direction='NORTH' }) => {
     const rotationMap = {
         'NORTH': 'rotate-0',
         'EAST': 'rotate-90',
@@ -19,9 +19,9 @@ const Square: React.FC<SquareProps> = ({ isDark, pawn=null, direction='SOUTH' })
     return (
         <div className={`w-16 h-16 flex items-center justify-center ${bgColor}`}>
             {
-                pawn === 'white' ? 
+                pawnColor === 'white' ? 
                 <img src={pawnWhite} alt="white-pawn" className={`w-8 h-8 ${rotation}`}/>
-                : pawn === 'black' ? 
+                : pawnColor === 'black' ? 
                 <img src={pawnBlack} alt="black-pawn" className={`w-8 h-8 ${rotation}`}/>
                 : null
             }

@@ -1,7 +1,14 @@
 import type React from "react"
 import Square from "./Square";
 
-const ChessBoard: React.FC = () => {
+interface ChessBoardProps {
+    x?: number;
+    y?: number;
+    direction?: 'NORTH' | 'SOUTH' | 'EAST' | 'WEST';
+    color?: 'WHITE' | 'BLACK';
+}
+
+const ChessBoard: React.FC<ChessBoardProps> = ({x, y, direction, color}) => {
     const renderSquares = () => {
         const squares = [];
         // A chessboard typically uses numbers 1 to 8 for rows and letters a to h for columns
@@ -9,8 +16,14 @@ const ChessBoard: React.FC = () => {
         for (let row = 0; row < 8; row++) {
             for (let col = 0; col < 8; col++) {
                 const isDark = (row + col) % 2 === 1;
+                if (x === col && y === row) {
+                    squares.push(
+                        <Square key={`${row}-${col}`} isDark={isDark} pawnColor={color as 'white' | 'black'} direction={direction}/>
+                    );
+                    continue;
+                }
                 squares.push(
-                    <Square key={`${row}-${col}`} isDark={isDark} pawn={'white'} direction='NORTH'/>
+                    <Square key={`${row}-${col}`} isDark={isDark}/>
                 );
             }
         }
