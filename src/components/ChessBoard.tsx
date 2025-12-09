@@ -10,7 +10,7 @@ const ChessBoard: React.FC = () => {
             for (let col = 0; col < 8; col++) {
                 const isDark = (row + col) % 2 === 1;
                 squares.push(
-                    <Square key={`${row}-${col}`} isDark={isDark} />
+                    <Square key={`${row}-${col}`} isDark={isDark} pawn={'white'} direction='NORTH'/>
                 );
             }
         }

@@ -73,3 +73,7 @@ export default defineConfig([
   },
 ])
 ```
+
+## References
+
+Pawn piece images were sourced from (Green Chess)[https://greenchess.net/info.php?item=downloads]
