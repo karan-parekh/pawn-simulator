@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 // All the string literals can be declared as constants/types for brevity, but they are used directly for now.
-export type commandType = {
+export interface Command {
     keyword: 'PLACE' | 'MOVE' | 'LEFT' | 'RIGHT' | 'REPORT';
     x?: number;
     y?: number;
@@ -10,7 +10,7 @@ export type commandType = {
 }
 
 interface InputBoxProps {
-    parseCommand: (command: commandType) => void;
+    parseCommand: (command: Command) => void;
 }
 
 const InputBox: React.FC<InputBoxProps> = ({parseCommand}) => {
@@ -73,15 +73,13 @@ const InputBox: React.FC<InputBoxProps> = ({parseCommand}) => {
             return;
         }
 
-        parseCommand(
-            { 
-                keyword: 'PLACE', 
-                x: position[0], 
-                y: position[1], 
-                direction: direction as 'NORTH' | 'SOUTH' | 'EAST' | 'WEST', 
-                color: color as 'WHITE' | 'BLACK'
-            }
-        )
+        parseCommand({ 
+            keyword: 'PLACE', 
+            x: position[0], 
+            y: position[1], 
+            direction: direction as 'NORTH' | 'SOUTH' | 'EAST' | 'WEST', 
+            color: color as 'WHITE' | 'BLACK'
+        })
     }
 
     return (

@@ -1,14 +1,10 @@
 import type React from "react"
 import Square from "./Square";
+import type { Command } from "./InputBox";
 
-interface ChessBoardProps {
-    x?: number;
-    y?: number;
-    direction?: 'NORTH' | 'SOUTH' | 'EAST' | 'WEST';
-    color?: 'WHITE' | 'BLACK';
-}
+export type PawnPosition = Omit<Command, 'keyword'>;
 
-const ChessBoard: React.FC<ChessBoardProps> = ({x, y, direction, color}) => {
+const ChessBoard: React.FC<PawnPosition> = ({x, y, direction, color}) => {
     const renderSquares = () => {
         const squares = [];
         // A chessboard typically uses numbers 1 to 8 for rows and letters a to h for columns
