@@ -16,12 +16,12 @@ function App() {
 
   const handlePlaceCommand = (command: Command) => {
     if (command.x === undefined || command.y === undefined || command.direction === undefined || command.color === undefined) {
-      alert("Incomplete PLACE command. Make sure to provide X,Y,DIRECTION,COLOR. Try again.");
+      alert("Invalid PLACE command. Make sure to provide X,Y,DIRECTION,COLOR. Try again.");
       return;
     }
 
     if (command.x < 0 || command.x > 7 || command.y < 0 || command.y > 7) {
-      alert("PLACE command out of bounds! X and Y must be between 0 and 7. Try again.");
+      alert("Invalid PLACE command. Coordinates out of bounds! X and Y must be between 0 and 7. Try again.");
       return;
     }
 
