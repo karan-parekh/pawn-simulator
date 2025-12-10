@@ -44,12 +44,17 @@ function App() {
     const steps = command.x || 1;
 
     if (firstMove && steps > 2) {
-      alert("Pawn can move a maximum of 2 steps at a time. Try again.");
+      alert("Invalid MOVE Command. Pawn can move a maximum of 2 steps for the first time. Try again.");
       return;
     }
 
     if (!firstMove && steps > 1) {
-      alert("Pawn can move a maximum of 1 step at a time. Try again.");
+      alert("Invalid MOVE Command. Pawn can move a maximum of 1 step at a time. Try again.");
+      return;
+    }
+
+    if (steps < 1) {
+      alert("Invalid MOVE Command. Number of steps must be at least 1. Try again.");
       return;
     }
 
