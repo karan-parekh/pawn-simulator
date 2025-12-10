@@ -77,3 +77,57 @@ test.describe('Invalid PLACE Commands', () => {
         });
     }
 });
+
+
+const validMoveCommands = [
+    { place: 'PLACE 0,1,NORTH,WHITE', move: 'MOVE 2', expectedPos: '0,3' },
+    { place: 'PLACE 4,4,SOUTH,BLACK', move: 'MOVE 1', expectedPos: '4,3' },
+    { place: 'PLACE 2,2,EAST,WHITE', move: 'MOVE 2', expectedPos: '4,2' },
+    { place: 'PLACE 5,5,WEST,BLACK', move: 'MOVE', expectedPos: '4,5' }
+];
+
+test.describe('Valid MOVE Commands', () => {
+    for (const command of validMoveCommands) {
+        test(`should move pawn correctly with commands: ${command.place} and ${command.move}`, async ({ page }) => {
+            const inputBox = page.getByPlaceholder('e.g. PLACE 0,1,NORTH,WHITE');
+            await inputBox.fill(command.place);
+            await page.click('button:has-text("Submit")');
+
+            await inputBox.fill(command.move);
+            await page.click('button:has-text("Submit")');
+
+            const args = command.expectedPos.split(',');
+            const x = args[0];
+            const y = args[1];
+            const targetSquare = page.getByTestId(`square-${x}-${y}`);
+            await expect(targetSquare).toBeVisible();
+
+            const pawnImg = targetSquare.locator('img');
+            await expect(pawnImg).toBeVisible();
+        });
+    }
+});
+
+const invalidMoveCommands = [
+    { move: 'MOVE 10'},
+    { move: 'MOVE -3'},
+    { move: 'MOVE 0'}
+]
+
+test.describe('Invalid MOVE Commands', () => {
+    for (const command of invalidMoveCommands) {
+        test(`should show alert for invalid move command: ${command.move}`, async ({ page }) => {
+            page.on('dialog', async dialog => {
+                expect(dialog.message()).toContain('Invalid'); // Can test for specific error messages if needed
+                await dialog.dismiss();
+            });
+
+            const inputBox = page.getByPlaceholder('e.g. PLACE 0,1,NORTH,WHITE');
+            await inputBox.fill('PLACE 3,3,NORTH,WHITE');
+            await page.click('button:has-text("Submit")');
+
+            await inputBox.fill(command.move);
+            await page.click('button:has-text("Submit")');
+        });
+    }
+});
