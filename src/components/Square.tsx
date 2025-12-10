@@ -7,10 +7,11 @@ interface SquareProps {
     isDark: boolean;
     pawnColor?: Color;
     direction?: Direction;
+    dataTestId?: string;
     children?: React.ReactNode;
 }
 
-const Square: React.FC<SquareProps> = ({ isDark, pawnColor, direction='NORTH' }) => {
+const Square: React.FC<SquareProps> = ({ isDark, pawnColor, direction='NORTH', dataTestId }) => {
     const rotationMap = {
         'NORTH': 'rotate-0',
         'EAST': 'rotate-90',
@@ -20,7 +21,7 @@ const Square: React.FC<SquareProps> = ({ isDark, pawnColor, direction='NORTH' })
     const rotation = rotationMap[direction];
     const bgColor = isDark ? 'bg-gray-700' : 'bg-gray-200';
     return (
-        <div className={`w-16 h-16 flex items-center justify-center ${bgColor}`}>
+        <div data-testid={dataTestId} className={`w-16 h-16 flex items-center justify-center ${bgColor}`}>
             {
                 pawnColor === 'WHITE' ? 
                 <img src={pawnWhite} alt="white-pawn" className={`w-8 h-8 ${rotation}`}/>

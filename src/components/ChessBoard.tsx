@@ -11,15 +11,16 @@ const ChessBoard: React.FC<PawnPosition> = ({x, y, direction, color}) => {
         // But since the requirement is to use a coordianate system, we will use 0-7 for both rows and columns
         for (let row = 7; row >= 0; row--) {
             for (let col = 0; col < 8; col++) {
+                const dataTestId = `square-${col}-${row}`;
                 const isDark = (row + col) % 2 === 1;
                 if (x === col && y === row) {
                     squares.push(
-                        <Square key={`${row}-${col}`} isDark={isDark} pawnColor={color as Color} direction={direction}/>
+                        <Square dataTestId={dataTestId} key={`${row}-${col}`} isDark={isDark} pawnColor={color as Color} direction={direction}/>
                     );
                     continue;
                 }
                 squares.push(
-                    <Square key={`${row}-${col}`} isDark={isDark}/>
+                    <Square dataTestId={dataTestId} key={`${row}-${col}`} isDark={isDark}/>
                 );
             }
         }
