@@ -1,12 +1,13 @@
 import { useState } from "react";
+import type { Color, Direction } from "./Square";
 
 // All the string literals can be declared as constants/types for brevity, but they are used directly for now.
 export interface Command {
     keyword: 'PLACE' | 'MOVE' | 'LEFT' | 'RIGHT' | 'REPORT';
     x?: number;
     y?: number;
-    direction?: 'NORTH' | 'SOUTH' | 'EAST' | 'WEST';
-    color?: 'WHITE' | 'BLACK';
+    direction?: Direction;
+    color?: Color;
 }
 
 interface InputBoxProps {
@@ -37,12 +38,12 @@ const InputBox: React.FC<InputBoxProps> = ({parseCommand}) => {
         // For MOVE command, validate X
         if (keyword === 'MOVE') {
             const args = cmd.split(' ').slice(1);
-            if (args.length !== 1 || isNaN(Number(args[0]))) {
+            if (args.length > 1) {
                 alert("Invalid MOVE command format. Use: MOVE <number_of_steps>. Try again.");
                 return;
             }
             parseCommand(
-                { keyword: 'MOVE', x: Number(args[0]) }
+                { keyword: 'MOVE', x: Number(args[0] || 1) }
             );
             return;
         }
@@ -77,8 +78,8 @@ const InputBox: React.FC<InputBoxProps> = ({parseCommand}) => {
             keyword: 'PLACE', 
             x: position[0], 
             y: position[1], 
-            direction: direction as 'NORTH' | 'SOUTH' | 'EAST' | 'WEST', 
-            color: color as 'WHITE' | 'BLACK'
+            direction: direction as Direction, 
+            color: color as Color
         })
     }
 
