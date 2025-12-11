@@ -1,6 +1,6 @@
 # Pawn Simulator
 
-This repository is the submission for a coding challenge for Curve Tomorrow and WeGuide. It is a small application that renders a chess board and allows the user to place and move a pawn using text commands. You can try the application here ->
+This repository is the submission for a coding challenge for Curve Tomorrow and WeGuide. It is a small application that renders a chess board and allows the user to place and move a pawn using text commands. You can try the application here -> https://pawnsim.vercel.app/
 
 ## Requirements
 
@@ -37,8 +37,8 @@ This repository is the submission for a coding challenge for Curve Tomorrow and 
 
 ### Chessboard rendering
 
-- The board is rendered using nested loops, one for the rows and one for the columns. This is O(n^2) time complexity and is not considered very efficient. However, rendering 64 sqaures every time is not a huge overhead and there is no noticeable lag in using the application.
-- Currently each squre of the board re-renders every time there is a state change. Although, this does not make a difference in performance just like the previous point, the app is still rendering 63 additional sqaures when it should only re-render 1 sqaure that has the pawn.
+- The board is rendered using nested loops, one for the rows and one for the columns. This is O(n^2) time complexity and is NOT considered very efficient. However, rendering 64 squares every time is not a huge overhead and there is no noticeable lag in using the application.
+- Currently each square of the board re-renders every time there is a state change. Although, this does not make a difference in performance just like the previous point, the app is still rendering 63 additional squares when it should only re-render 1 square that has the pawn.
 - **Solution:** A better approach would be maintian the state of the entire board with a 2D matrix. This approach will resolve both of the above problems.
   - We can directly render the board from the matrix without computation.
   - Updating the state becomes much easier and less error prone
@@ -50,6 +50,7 @@ This repository is the submission for a coding challenge for Curve Tomorrow and 
 
 ### QOL improvements
 
+- The X and Y coordinates can be displayed on at least the left and bottom side of the board to easily identify the position of the pawn.
 - Currently the user needs to type and enter commands to move the pawn. This can be replaced with simple keydown events like `WASD` keys for moving the pawn and arrow keys for changing the orientation of the pawn. This will reduce the friction from the UX perspective.
 - The output of any error is through the alert dialogue box and the user needs to click 'OK' to dismiss. This can be replaced with a simple alert elements under the input box in red font indicating something is wrong.
 - There are no instructions on how to use the app. A simple `div` with an unordered list explaining the game can be added at the bottom.
